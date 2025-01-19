@@ -1,0 +1,18 @@
+- name: Install dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg
+
+- name: Disable swap
+  command: swapoff -a
+
+- name: Ensure swap is disabled on boot
+  replace:
+    path: /etc/fstab
+    regexp: '^\s*([^#\s]+\s+swap\s+[^\s]+\s+[^\s]+\s+\d+\s+\d+)$'
+    replace: '# \1'
