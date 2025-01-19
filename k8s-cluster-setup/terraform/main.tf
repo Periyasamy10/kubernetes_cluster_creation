@@ -11,7 +11,7 @@ resource "null_resource" "master_node_setup" {
 # Worker node creation
 resource "aws_instance" "worker" {
   count         = var.worker_count
-  ami           = "ami-0c02fb55956c7d316" # Amazon Linux 2 AMI
+  ami           = var.ami # Amazon Linux 2 AMI
   instance_type = var.instance_type
   key_name      = var.key_pair_name
   subnet_id     = var.subnet_id

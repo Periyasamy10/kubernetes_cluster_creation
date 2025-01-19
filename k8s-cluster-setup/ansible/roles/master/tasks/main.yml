@@ -1,3 +1,12 @@
+- name: Install kubeadm, kubelet, and kubectl
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - kubeadm
+    - kubelet
+    - kubectl
+
 - name: Initialize Kubernetes control plane
   command: kubeadm init --pod-network-cidr=10.244.0.0/16
 

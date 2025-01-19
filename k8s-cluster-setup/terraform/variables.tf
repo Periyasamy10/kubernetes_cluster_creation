@@ -3,6 +3,11 @@ variable "aws_region" {
   type        = string
 }
 
+variable "ami" {
+  description = "AMI ID"
+  type        = string
+}
+
 variable "vpc_id" {
   description = "VPC ID where instances will be deployed"
   type        = string

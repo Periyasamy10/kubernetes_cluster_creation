@@ -1,3 +1,8 @@
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
 - name: Install dependencies
   apt:
     name: "{{ item }}"
@@ -7,12 +12,9 @@
     - ca-certificates
     - curl
     - gnupg
+    - software-properties-common
 
 - name: Disable swap
-  command: swapoff -a
-
-- name: Ensure swap is disabled on boot
-  replace:
-    path: /etc/fstab
-    regexp: '^\s*([^#\s]+\s+swap\s+[^\s]+\s+[^\s]+\s+\d+\s+\d+)$'
-    replace: '# \1'
+  shell: |
+    swapoff -a
+    sed -i '/ swap / s/^\(.*\)$/#\1/' /etc/fstab

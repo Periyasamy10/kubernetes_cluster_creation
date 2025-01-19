@@ -1,2 +1,11 @@
+- name: Install kubeadm, kubelet, and kubectl
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - kubeadm
+    - kubelet
+    - kubectl
+
 - name: Join worker nodes to the cluster
   shell: "{{ hostvars['master']['join_command'] }}"
