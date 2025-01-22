@@ -34,15 +34,15 @@ ${ip} ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/id_rsa
 %{ endfor }
 EOT
 
-  filename = "${path.module}/ansible/inventory.ini"
+  filename = "/home/ubuntu/kubernetes_cluster_creation/k8s-cluster-setup/ansible/inventory.ini"
 }
 
 # Run Ansible playbook
 resource "null_resource" "run_ansible" {
   provisioner "local-exec" {
     command = <<EOT
-      ansible-playbook ${path.module}/ansible/setup_kubernetes.yml \
-        -i ${path.module}/ansible/inventory.ini
+      ansible-playbook /home/ubuntu/kubernetes_cluster_creation/k8s-cluster-setup/ansible/setup_kubernetes.yml \
+        -i /home/ubuntu/kubernetes_cluster_creation/k8s-cluster-setup/ansible/inventory.ini
     EOT
   }
 
