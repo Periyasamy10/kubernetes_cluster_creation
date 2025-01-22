@@ -30,7 +30,7 @@ ${var.master_node_ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id
 
 [worker]
 %{ for ip in aws_instance.worker.*.private_ip }
-${ip} ansible_user=ec2-user ansible_ssh_private_key_file=~/.ssh/id_rsa
+${ip} ansible_user=ubuntu ansible_ssh_private_key_file=~/.ssh/id_rsa
 %{ endfor }
 EOT
 
