@@ -41,8 +41,6 @@ EOT
 resource "null_resource" "run_ansible" {
   provisioner "local-exec" {
     command = <<EOT
-      ansible-playbook /home/ubuntu/kubernetes_cluster_creation/k8s-cluster-setup/ansible/setup_kubernetes.yml \
-        -i /home/ubuntu/kubernetes_cluster_creation/k8s-cluster-setup/ansible/inventory.ini
     EOT
   }
 
