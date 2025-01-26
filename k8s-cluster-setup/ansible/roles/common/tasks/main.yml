@@ -6,6 +6,60 @@
   become: yes
   ignore_errors: yes
 
+
+- name: Stop kube-apiserver service
+  systemd:
+    name: kube-apiserver
+    state: stopped
+  become: yes
+  ignore_errors: yes
+
+- name: Stop kube-scheduler service
+  systemd:
+    name: kube-scheduler
+    state: stopped
+  become: yes
+  ignore_errors: yes
+
+- name: Stop kube-controller-manager service
+  systemd:
+    name: kube-controller-manager
+    state: stopped
+  become: yes
+  ignore_errors: yes
+
+- name: Stop kube-proxy service
+  systemd:
+    name: kube-proxy
+    state: stopped
+  become: yes
+  ignore_errors: yes
+
+- name: Check for processes using port 6443
+  shell: lsof -i :6443
+  register: lsof_output
+  ignore_errors: yes
+  become: yes
+
+- name: Kill processes using port 6443
+  shell: kill -9 {{ item }}
+  loop: "{{ lsof_output.stdout_lines | map('extract', 'fields.1') }}"
+  when: lsof_output.stdout_lines is defined
+  ignore_errors: yes
+  become: yes
+
+- name: Verify port 6443 availability
+  shell: lsof -i :6443
+  register: port_check
+  ignore_errors: yes
+  become: yes
+
+- name: Ensure port 6443 is free
+  fail:
+    msg: "Port 6443 is still in use. Please investigate further."
+  when: port_check.stdout != ''
+  ignore_errors: yes
+
 - name: Uninstall Kubernetes packages
   apt:
     name: kubeadm,kubelet,kubectl,kubernetes-cni

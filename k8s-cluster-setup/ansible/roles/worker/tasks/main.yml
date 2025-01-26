@@ -6,6 +6,7 @@
     - kubeadm
     - kubelet
     - kubectl
+  become: yes
 
 - name: Wait for the master node to be ready
   wait_for:
@@ -19,3 +20,4 @@
   delay: 30
   register: join_result
   until: join_result.rc == 0
+  become: yes
