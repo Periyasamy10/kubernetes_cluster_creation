@@ -57,5 +57,9 @@ resource "null_resource" "run_ansible" {
     EOT
   }
 
+  triggers = {
+    always_run = timestamp()
+  }
+
   depends_on = [local_file.inventory, null_resource.wait_for_workers, null_resource.master_node_setup]
 }

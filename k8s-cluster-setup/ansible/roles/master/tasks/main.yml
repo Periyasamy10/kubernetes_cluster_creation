@@ -5,7 +5,7 @@
   loop:
     - kubeadm
     - kubelet
-    - kubectl
+    - kubectl     
 
 - name: Initialize Kubernetes control plane
   command: kubeadm init --pod-network-cidr={{ pod_network_cidr }}
@@ -28,6 +28,13 @@
   copy:
     src: /etc/kubernetes/admin.conf
     dest: /root/.kube/config
+
+- name: Configure kubeconfig for kubectl
+  shell: |
+    mkdir -p $HOME/.kube
+    cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    chown $(id -u):$(id -g) $HOME/.kube/config
+  become: yes 
 
 - name: Deploy CNI Plugin (Flannel)
   command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
