@@ -21,18 +21,13 @@
   register: join_command
   become: yes
 
-- name: Create .kube directory
-  file:
-    path: /root/.kube
-    state: directory
-    mode: '0755'
+- name: Create .kube directory and copy admin.conf
+  shell: |
+    sudo mkdir -p /root/.kube
+    sudo cp /etc/kubernetes/admin.conf /root/.kube/config
   become: yes
+  ignore_errors: yes
 
-- name: Copy admin.conf to .kube
-  copy:
-    src: /etc/kubernetes/admin.conf
-    dest: /root/.kube/config
-  become: yes
 
 - name: Configure kubeconfig for kubectl (for the current user)
   shell: |
