@@ -1,18 +1,21 @@
-- name: Wait for the worker node to be ready
-  wait_for:
-    host: "{{ inventory_hostname }}"
-    port: 22
-    timeout: 300
-    state: started
-
 - name: Install kubeadm, kubelet, and kubectl
   apt:
     name: "{{ item }}"
     state: present
-  with_items:
+  loop:
     - kubeadm
     - kubelet
     - kubectl
 
-- name: Join worker nodes to the cluster
-  shell: "{{ hostvars['master']['join_command'] }}"
+- name: Wait for the master node to be ready
+  wait_for:
+    port: 6443
+    host: "{{ groups['master'][0] }}"
+    timeout: 300
+
+- name: Join the worker node to the cluster
+  command: "{{ hostvars[groups['master'][0]]['join_command'].stdout }}"
+  retries: 5
+  delay: 30
+  register: join_result
+  until: join_result.rc == 0
