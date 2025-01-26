@@ -31,9 +31,9 @@
 
 - name: Configure kubeconfig for kubectl (for the current user)
   shell: |
-    sudo mkdir -p $HOME/.kube
-    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+    sudo mkdir -p $HOME/.kube && echo "Directory created"
+    sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config && echo "File copied"
+    sudo chown $(id -u):$(id -g) $HOME/.kube/config && echo "Ownership changed"
 
 
 - name: Deploy CNI Plugin (Flannel)
