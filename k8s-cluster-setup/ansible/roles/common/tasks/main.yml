@@ -35,24 +35,10 @@
   become: yes
   ignore_errors: yes
 
-- name: Check for processes using port 6443
-  shell: lsof -i :6443
-  register: lsof_output
+- name: Create .kube directory and copy admin.conf
+  shell: |
+    sudo kubeadm reset
   ignore_errors: yes
-  become: yes
-
-- name: Kill processes using port 6443
-  shell: kill -9 {{ item }}
-  loop: "{{ lsof_output.stdout_lines | map('extract', 'fields.1') }}"
-  when: lsof_output.stdout_lines is defined
-  ignore_errors: yes
-  become: yes
-
-- name: Verify port 6443 availability
-  shell: lsof -i :6443
-  register: port_check
-  ignore_errors: yes
-  become: yes
 
 - name: Ensure port 6443 is free
   fail:
