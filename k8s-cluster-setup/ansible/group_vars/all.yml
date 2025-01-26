@@ -1,2 +1,2 @@
-kubernetes_version: "1.31"
+kubernetes_version: "1.32"
 pod_network_cidr: "10.244.0.0/16"
