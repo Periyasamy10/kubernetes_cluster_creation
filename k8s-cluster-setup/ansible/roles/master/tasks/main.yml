@@ -6,6 +6,7 @@
     - kubeadm
     - kubelet
     - kubectl
+  become: yes
 
 - name: Initialize Kubernetes control plane
   command: kubeadm init --pod-network-cidr={{ pod_network_cidr }}

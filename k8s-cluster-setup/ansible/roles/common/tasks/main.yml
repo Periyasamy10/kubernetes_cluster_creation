@@ -4,6 +4,7 @@
     state: stopped
     enabled: no
   become: yes
+  ignore_errors: yes
 
 - name: Uninstall Kubernetes packages
   apt:
@@ -11,6 +12,7 @@
     state: absent
     purge: yes
   become: yes
+  ignore_errors: yes
 
 - name: Remove Kubernetes configuration files
   file:
@@ -24,11 +26,13 @@
     - /var/run/kubernetes
     - /etc/cni/net.d
   become: yes
+  ignore_errors: yes
 
 - name: Clean up iptables rules
   shell: iptables -F
   ignore_errors: yes
   become: yes
+  ignore_errors: yes
 
 - name: Remove Kubernetes repository and keys
   shell: |
@@ -36,36 +40,42 @@
     rm -rf /etc/apt/sources.list.d/kubernetes.list
   ignore_errors: yes
   become: yes
+  ignore_errors: yes
 
 - name: Remove .kube directory
   file:
     path: /root/.kube
     state: absent
   become: yes
+  ignore_errors: yes
 
 - name: Stop containerd service
   systemd:
     name: containerd
     state: stopped
   become: yes
+  ignore_errors: yes
 
 - name: Disable containerd service
   systemd:
     name: containerd
     enabled: no
   become: yes
+  ignore_errors: yes
 
 - name: Remove containerd binary
   file:
     path: /usr/local/bin/containerd
     state: absent
   become: yes
+  ignore_errors: yes
 
 - name: Remove runc binary
   file:
     path: /usr/local/sbin/runc
     state: absent
   become: yes
+  ignore_errors: yes
 
 - name: Remove containerd directories
   file:
@@ -77,24 +87,27 @@
     - /run/containerd
     - /opt/cni/bin
   become: yes
+  ignore_errors: yes
 
 - name: Remove CNI plugins
   file:
     path: /opt/cni/bin
     state: absent
   become: yes
+  ignore_errors: yes
 
 - name: Remove containerd systemd service file
   file:
     path: /etc/systemd/system/containerd.service
     state: absent
   become: yes
+  ignore_errors: yes
 
 - name: Reload systemd daemon
   systemd:
     daemon_reload: yes
   become: yes
-
+  ignore_errors: yes
 
 - name: Update apt cache
   apt:
