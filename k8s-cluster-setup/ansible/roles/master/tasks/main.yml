@@ -34,11 +34,9 @@
     sudo mkdir -p $HOME/.kube
     sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
     sudo chown $(id -u):$(id -g) $HOME/.kube/config
-  environment:
-    HOME: "{{ ansible_env.HOME }}"
+
 
 - name: Deploy CNI Plugin (Flannel)
   command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
   become: yes
-  environment:
-    KUBECONFIG: /etc/kubernetes/admin.conf
+
