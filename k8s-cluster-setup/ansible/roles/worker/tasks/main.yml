@@ -1,3 +1,10 @@
+- name: Wait for the worker node to be ready
+  wait_for:
+    host: "{{ inventory_hostname }}"
+    port: 22
+    timeout: 300
+    state: started
+
 - name: Install kubeadm, kubelet, and kubectl
   apt:
     name: "{{ item }}"
