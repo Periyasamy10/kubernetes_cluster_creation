@@ -33,7 +33,7 @@
   shell: |
     sudo mkdir -p /home/ubuntu/.kube && echo "Directory created"
     sudo cp /etc/kubernetes/admin.conf /home/ubuntu/.kube/config && echo "File copied"
-    sudo chown $(id -u):$(id -g) /home/ubuntu/.kube/config && echo "Ownership changed"
+    sudo chown ubuntu:ubuntu /home/ubuntu/.kube/config && echo "Ownership changed"
 
 
 - name: Deploy CNI Plugin (Flannel)
