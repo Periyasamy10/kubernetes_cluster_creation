@@ -14,7 +14,20 @@
     - gnupg
     - software-properties-common
 
+- name: Add Kubernetes package repository
+  shell: |
+    mkdir -p -m 755 /etc/apt/keyrings
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.32/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.32/deb/ /' > /etc/apt/sources.list.d/kubernetes.list
+  args:
+    warn: false
+
 - name: Disable swap
   shell: |
     swapoff -a
     sed -i '/ swap / s/^\(.*\)$/#\1/' /etc/fstab
+
+- name: Update apt package index
+  apt:
+    update_cache: yes
+    force_apt_get: yes
