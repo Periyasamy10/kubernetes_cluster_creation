@@ -35,10 +35,10 @@
   become: yes
   ignore_errors: yes
 
-- name: Create .kube directory and copy admin.conf
-  shell: |
-    sudo kubeadm reset
-  ignore_errors: yes
+#- name: reset kubeadm
+#  shell: |
+#    sudo kubeadm reset
+#  ignore_errors: yes
 
 - name: Ensure port 6443 is free
   fail:
