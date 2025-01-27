@@ -1,13 +1,11 @@
 - name: Reset kubeadm
   shell: |
     sudo kubeadm reset --force
-  become: yes
   ignore_errors: yes
 
 - name: remove .kube
   shell: |
     sudo rm -rf /home/ubuntu/.kube
-  become: yes
   ignore_errors: yes
 
 - name: Install kubeadm, kubelet, and kubectl
@@ -37,7 +35,6 @@
   shell: |
     sudo mkdir -p /root/.kube
     sudo cp /etc/kubernetes/admin.conf /root/.kube/config
-  become: yes
   ignore_errors: yes
 
 
