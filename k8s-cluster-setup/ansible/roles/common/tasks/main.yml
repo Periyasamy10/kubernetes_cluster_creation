@@ -1,6 +1,7 @@
 - name: Reset kubeadm
   shell: kubeadm reset --force
   become: yes
+  ignore_errors: yes
 
 - name: Stop and disable kubelet service
   systemd:
