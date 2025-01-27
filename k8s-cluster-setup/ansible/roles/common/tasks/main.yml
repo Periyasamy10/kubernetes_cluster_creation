@@ -40,12 +40,26 @@
 #    sudo kubeadm reset
 #  ignore_errors: yes
 
-- name: Ensure port 6443 is free
-  fail:
-    msg: "Port 6443 is still in use. Please investigate further."
-  when: port_check.stdout != ''
+- name: Find processes using port 6443
+  shell: "lsof -t -i:6443"
+  register: processes_on_port
+  become: yes
   ignore_errors: yes
 
+- name: Kill processes using port 6443
+  shell: "kill -9 {{ item }}"
+  with_items: "{{ processes_on_port.stdout_lines }}"
+  when: processes_on_port.stdout_lines is defined and processes_on_port.stdout_lines | length > 0
+  become: yes
+
+- name: Verify port 6443 is free
+  shell: "lsof -i:6443"
+  register: port_check
+  become: yes
+  ignore_errors: yes
+  changed_when: port_check.rc == 0
+  failed_when: port_check.rc != 0 and port_check.rc != 1
+  
 - name: Uninstall Kubernetes packages
   apt:
     name: kubeadm,kubelet,kubectl,kubernetes-cni
