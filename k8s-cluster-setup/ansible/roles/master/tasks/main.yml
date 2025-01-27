@@ -1,3 +1,9 @@
+- name: Create .kube directory and copy admin.conf
+  shell: |
+    yes | sudo kubeadm reset
+  become: yes
+  ignore_errors: yes
+
 - name: Install kubeadm, kubelet, and kubectl
   apt:
     name: "{{ item }}"
