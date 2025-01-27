@@ -208,7 +208,7 @@
   become: yes
 
 - name: Install runc
-  command: sudo install -m 755 /tmp/runc.amd64 /usr/local/sbin/runc
+  command: install -m 755 /tmp/runc.amd64 /usr/local/sbin/runc
   become: yes
 
 - name: Download CNI plugins
@@ -267,13 +267,13 @@
   become: yes
 
 - name: Verify containerd service status
-  command: sudo systemctl status containerd
+  command: systemctl status containerd
   become: yes
 
 - name: Fix ip_forward issue
   shell: |
     echo "net.ipv4.ip_forward=1" | sudo tee -a /etc/sysctl.d/99-sysctl.conf
-    sudo sysctl -p
+    sysctl -p
   become: yes
 
 - name: Add Kubernetes package repository
