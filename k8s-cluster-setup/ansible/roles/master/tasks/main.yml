@@ -1,6 +1,6 @@
 - name: Reset kubeadm
   shell: |
-    sudo kubeadm reset --force
+    sudo /usr/bin/kubeadm reset --force
   ignore_errors: yes
 
 - name: remove .kube
