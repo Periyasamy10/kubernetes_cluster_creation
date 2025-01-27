@@ -1,7 +1,10 @@
 - name: Reset kubeadm
   shell: |
-    sudo /usr/bin/kubeadm reset --force
+    export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin && \
+    sudo -E /usr/bin/kubeadm reset --force
+  become: yes
   ignore_errors: yes
+
 
 - name: remove .kube
   shell: |
