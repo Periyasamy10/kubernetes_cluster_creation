@@ -1,3 +1,13 @@
+- name: Debug PATH variable
+  shell: "echo $PATH"
+  register: path_output
+  ignore_errors: yes
+
+- name: Display PATH
+  debug:
+    var: path_output.stdout
+
+
 - name: Stop and disable kubelet service
   systemd:
     name: kubelet
