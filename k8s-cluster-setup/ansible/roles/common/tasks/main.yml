@@ -35,18 +35,6 @@
   become: yes
   ignore_errors: yes
 
-- name: remove .kube
-  shell: |
-    sudo rm -rf /home/ubuntu/.kube
-  become: yes
-  ignore_errors: yes
-
-- name: Reset kubeadm
-  shell: |
-    yes | sudo kubeadm reset
-  become: yes
-  ignore_errors: yes
-
 #- name: reset kubeadm
 #  shell: |
 #    sudo kubeadm reset
