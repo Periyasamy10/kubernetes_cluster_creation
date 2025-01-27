@@ -1,4 +1,10 @@
-- name: Create .kube directory and copy admin.conf
+- name: Reset kubeadm
+  shell: |
+    sudo rm -rf /home/ubuntu/.kube
+  become: yes
+  ignore_errors: yes
+
+- name: Reset kubeadm
   shell: |
     yes | sudo kubeadm reset
   become: yes
