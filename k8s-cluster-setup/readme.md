@@ -18,7 +18,12 @@ This project sets up a Kubernetes cluster (1 master node and 2 worker nodes) on 
 
 1. Create an Ubuntu EC2 instance with the following specifications:
     - Instance type: `t2.medium`
-    - Security Group: Allow SSH (port 22) and Kubernetes API (port 6443).
+    - Security Group: Allow the following inbound ports:
+            SSH: 22
+            Kubernetes API: 6443
+            etcd server client API: 2379-2380
+            Kubelet API: 10250-10255
+            Cluster communication: 8472 (for Flannel) and 443
     - Key Pair: Ensure you have access to the private key file.
 
 ### Step 2: Clone the Repository
@@ -87,14 +92,14 @@ Edit the `terraform.tfvars` file located in `kubernetes_cluster_creation/k8s-clu
 ```plaintext
 aws_region         = "ap-south-1"
 ami                = "ami-023a307f3d27ea427"
-vpc_id             = "vpc-0046a802b5e298ba9"
-subnet_id          = "subnet-0096a0bed0badcdde"
-security_group_id  = "sg-03b12762a47d78143"
-key_pair_name      = "kubernetes"
-master_node_ip     = "172.31.38.211"
+vpc_id             = ""
+subnet_id          = ""
+security_group_id  = ""
+key_pair_name      = ""
+master_node_ip     = ""
 worker_count       = 2
 instance_type      = "t2.medium"
-pem_key_path       = "/home/ubuntu/kubernetes.pem"
+pem_key_path       = ""
 ```
 
 Ensure the key pair used matches the one used to create the master node.
