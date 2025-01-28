@@ -37,11 +37,11 @@ resource "null_resource" "wait_for_workers" {
 resource "local_file" "inventory" {
   content = <<EOT
 [master]
-${var.master_node_ip} ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/kubernetes.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+${var.master_node_ip} ansible_user=ubuntu ansible_ssh_private_key_file=${var.pem_key_path} ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 
 [worker]
 %{ for ip in aws_instance.worker.*.private_ip }
-${ip} ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/kubernetes.pem ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+${ip} ansible_user=ubuntu ansible_ssh_private_key_file=${var.pem_key_path} ansible_ssh_common_args='-o StrictHostKeyChecking=no'
 %{ endfor }
 EOT
 

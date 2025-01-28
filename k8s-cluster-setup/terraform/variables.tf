@@ -44,4 +44,10 @@ variable "key_pair_name" {
   description = "AWS Key Pair name for SSH access"
   type        = string
 }
+
+variable "pem_key_path" {
+  description = "Path to the PEM key file"
+  type        = string
+  default     = "/home/ubuntu/kubernetes.pem"
+}
  

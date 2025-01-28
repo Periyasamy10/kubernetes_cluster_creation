@@ -7,3 +7,4 @@ key_pair_name      = "kubernetes"
 master_node_ip     = "172.31.38.211"
 worker_count       = 2
 instance_type      = "t2.medium"
+pem_key_path       = "/home/ubuntu/kubernetes.pem"
