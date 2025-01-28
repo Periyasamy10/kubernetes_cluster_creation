@@ -19,11 +19,11 @@ This project sets up a Kubernetes cluster (1 master node and 2 worker nodes) on 
 1. Create an Ubuntu EC2 instance with the following specifications:
     - Instance type: `t2.medium`
     - Security Group: Allow the following inbound ports:
-            SSH: 22
-            Kubernetes API: 6443
-            etcd server client API: 2379-2380
-            Kubelet API: 10250-10255
-            Cluster communication: 8472 (for Flannel) and 443
+           - SSH: 22
+           - Kubernetes API: 6443
+           - etcd server client API: 2379-2380
+           - Kubelet API: 10250-10255
+           - Cluster communication: 8472 (for Flannel) and 443
     - Key Pair: Ensure you have access to the private key file.
 
 ### Step 2: Clone the Repository
